@@ -1,6 +1,7 @@
 package com.playlist.composite;
 
 import com.playlist.core.Track;
+
 import java.util.List;
 
 /**
@@ -8,42 +9,53 @@ import java.util.List;
  */
 public class TrackItem implements MediaItem {
 
-  /**
-   * Cria a folha a partir de uma faixa.
-   *
-   * @param track faixa envolvida. Não pode ser nula.
-   * @throws IllegalArgumentException se {@code track} for nula.
-   */
-  public TrackItem(Track track) {
-    throw new UnsupportedOperationException("Exercício 1: implemente o construtor de TrackItem");
-  }
+    // Guarda a Track original que foi recebida pelo TrackItem.
+    private final Track track;
 
-  /**
-   * Devolve a faixa envolvida por esta folha.
-   *
-   * @return a faixa original.
-   */
-  public Track getTrack() {
-    throw new UnsupportedOperationException("Exercício 1: implemente TrackItem.getTrack");
-  }
+    /**
+     * Cria a folha a partir de uma faixa.
+     *
+     * @param track faixa envolvida. Não pode ser nula.
+     * @throws IllegalArgumentException se {@code track} for nula.
+     */
+    public TrackItem(Track track) {
+        // verifica se a faixa recebida é nula:
+        if (track == null) {
+            throw new IllegalArgumentException("A faixa não pode ser nula.");
+        }
 
-  @Override
-  public String getName() {
-    throw new UnsupportedOperationException("Exercício 1: implemente TrackItem.getName");
-  }
+        // construtor de fato:
+        this.track = track;
+    }
 
-  @Override
-  public int getDurationSeconds() {
-    throw new UnsupportedOperationException("Exercício 1: implemente TrackItem.getDurationSeconds");
-  }
+    /**
+     * Devolve a faixa envolvida por esta folha.
+     *
+     * @return a faixa original.
+     */
+    public Track getTrack() {
 
-  @Override
-  public int getTrackCount() {
-    throw new UnsupportedOperationException("Exercício 1: implemente TrackItem.getTrackCount");
-  }
+      return track;
+    }
 
-  @Override
-  public List<Track> flatten() {
-    throw new UnsupportedOperationException("Exercício 1: implemente TrackItem.flatten");
-  }
+    @Override
+    public String getName() {
+      return track.title();
+    }
+
+    @Override
+    public int getDurationSeconds() {
+        return track.durationSeconds();
+    }
+
+    @Override
+    public int getTrackCount() {
+        return 1; // -> porque cada TrackItem representa apenas 1 faixa.
+    }
+
+    @Override
+    public List<Track> flatten() {
+      // Retorna uma lista contendo somente a Track encapsulada:
+      return List.of(track);
+    }
 }
