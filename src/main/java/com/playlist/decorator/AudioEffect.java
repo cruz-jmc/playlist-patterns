@@ -17,7 +17,14 @@ public abstract class AudioEffect implements AudioTrack {
    * @throws IllegalArgumentException se {@code wrapped} for nulo.
    */
   protected AudioEffect(AudioTrack wrapped) {
-    throw new UnsupportedOperationException("Exercício 4: implemente o construtor de AudioEffect");
+
+    // Verifica se o áudio que será "decorado" foi fornecido
+    if (wrapped == null) {
+      throw new IllegalArgumentException("wrapped não pode ser nulo");
+    }
+
+    // Guarda no construtor normal
+    this.wrapped = wrapped;
   }
 
   /**
@@ -29,11 +36,15 @@ public abstract class AudioEffect implements AudioTrack {
 
   @Override
   public String getTitle() {
-    throw new UnsupportedOperationException("Exercício 4: implemente AudioEffect.getTitle");
+
+    // O título pertence ao áudio original, então simplesmente repassamos a chamada.
+    return wrapped.getTitle();
   }
 
   @Override
   public String getEffectChain() {
-    throw new UnsupportedOperationException("Exercício 4: implemente AudioEffect.getEffectChain");
+
+    // Pega a cadeia que já existia no áudio decorado e acrescenta o efeito atual no final, o "wrapped"
+    return wrapped.getEffectChain() + " -> " + describe();
   }
 }
